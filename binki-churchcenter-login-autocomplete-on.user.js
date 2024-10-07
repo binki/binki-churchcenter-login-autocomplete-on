@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name binki-churchcenter-login-autocomplete-on
-// @version 1.0.4
+// @version 1.0.5
 // @homepageURL https://github.com/binki/binki-churchcenter-login-autocomplete-on
 // @match https://*.churchcenter.com/*
 // @require https://raw.githubusercontent.com/binki/binki-userscript-when-element-query-selector-async/0a9c204bdc304a9e82f1c31d090fdfdf7b554930/binki-userscript-when-element-query-selector-async.js
