@@ -10,13 +10,20 @@ const setup = async () => {
 
   const setAutocomplete = () => {
     const type = deviceValueElement.getAttribute('type');
+    const expectedName = type === 'tel' ? 'tel' : type === 'email' ? 'email' : 'login';
+    if (deviceValueElement.name !== expectedName) {
+      deviceValueElement.name = expectedName;
+    }
     const expectedAutocomplete = type === 'tel' ? 'tel' : type === 'email' ? 'email' : 'on';
     if (deviceValueElement.getAttribute('autocomplete') !== expectedAutocomplete) {
       deviceValueElement.setAttribute('autocomplete', expectedAutocomplete);
-    }
-    const expectedName = type === 'tel' ? 'tel' : type === 'email' ? 'email' : 'login';
-    if (deviceValueElement.getAttribute('name') !== expectedName) {
-      deviceValueElement.setAttribute('name', expectedName);
+      // Somehow this is needed when combined with binki-churchcenter-login-prefer-email (or to even blur and focus Firefox itself)
+      // since Firefox must have some race condition in activating the autofill logic while also switching the input type?
+      // Weird.
+      if (document.activeElement === deviceValueElement) {
+        deviceValueElement.blur();
+        deviceValueElement.focus();
+      }
     }
   };
 
