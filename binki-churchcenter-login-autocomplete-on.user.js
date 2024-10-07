@@ -5,16 +5,6 @@
 // @require https://raw.githubusercontent.com/binki/binki-userscript-when-element-query-selector-async/0a9c204bdc304a9e82f1c31d090fdfdf7b554930/binki-userscript-when-element-query-selector-async.js
 // ==/UserScript==
 
-const isOrIsAncestorOf = (elementA, elementB) => {
-  if (!elementA) throw new Error('elementA must be specified');
-  if (!elementB) throw new Error('elementB must be specified');
-  while (elementB) {
-    if (elementA === elementB) return true;
-    elementB = elementB.parentElement;
-  }
-  return false;
-};
-
 const setup = async () => {
   const deviceValueElement = await whenElementQuerySelectorAsync(document.body, '#device_value');
 
@@ -43,7 +33,7 @@ const setup = async () => {
   new MutationObserver((changes, observer) => {
     for (const change of changes) {
       for (const removedNode of change.removedNodes) {
-        if (isOrIsAncestorOf(removedNode, deviceValueElement)) {
+        if (removedNode.contains(deviceValueElement)) {
           observer.disconnect();
           setup();
         }
